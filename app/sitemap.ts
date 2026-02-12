@@ -5,6 +5,31 @@ import { SERVICE_SLUGS } from "@/data/services";
 import { SOLUTION_SLUGS } from "@/data/solutions";
 import { BLOG_SLUGS } from "@/data/blog";
 
+/** Список всех индексируемых URL (для IndexNow и др.) */
+export function getSitemapUrlList(): string[] {
+  const base = SITE_URL;
+  const urls: string[] = [
+    base,
+    `${base}/services`,
+    `${base}/solutions`,
+    `${base}/goroda`,
+    `${base}/prices`,
+    `${base}/sitemap`,
+    `${base}/contacts`,
+    `${base}/blog`,
+    `${base}/privacy`,
+  ];
+  for (const slug of SERVICE_SLUGS) urls.push(`${base}/services/${slug}`);
+  for (const slug of SOLUTION_SLUGS) urls.push(`${base}/solutions/${slug}`);
+  for (const slug of BLOG_SLUGS) urls.push(`${base}/blog/${slug}`);
+  for (const citySlug of CITY_SLUGS) {
+    urls.push(`${base}/${citySlug}`, `${base}/${citySlug}/prices`);
+    for (const serviceSlug of SERVICE_SLUGS) urls.push(`${base}/${citySlug}/${serviceSlug}`);
+    for (const solutionSlug of SOLUTION_SLUGS) urls.push(`${base}/${citySlug}/solutions/${solutionSlug}`);
+  }
+  return urls;
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE_URL;
   const entries: MetadataRoute.Sitemap = [
