@@ -724,21 +724,21 @@ export function getPricesWhatAffects(seedKey: string): string {
   return pickBySlug(seedKey, PRICES_WHAT_AFFECTS)();
 }
 
-const PRICES_FAQ_Q = [
+const PRICES_FAQ_Q: Array<(cityName: string, P?: string) => string> = [
   (cityName: string, P?: string) => `Сколько стоит установка системы очистки воды в ${P ?? cityName}?`,
-  () => `Что входит в цену под ключ?`,
-  () => `Почему нет точных цен на сайте?`,
-  () => `Есть ли доплата за выезд в область?`,
+  (_cityName: string, _P?: string) => `Что входит в цену под ключ?`,
+  (_cityName: string, _P?: string) => `Почему нет точных цен на сайте?`,
+  (_cityName: string, _P?: string) => `Есть ли доплата за выезд в область?`,
 ];
 
-const PRICES_FAQ_A = [
+const PRICES_FAQ_A: Array<(cityName: string, P?: string) => string> = [
   (cityName: string, P?: string) =>
     `Стоимость зависит от схемы очистки и типа оборудования. Базовые решения — от ориентировочной суммы под ключ; точный расчёт после выезда инженера и при необходимости анализа воды. Оставьте заявку или позвоните — подготовим расчёт.`,
-  () =>
+  (_cityName: string, _P?: string) =>
     `Выезд инженера, подбор оборудования, доставка, монтаж и подключение, пусконаладка, обучение пользованию. Договор и гарантия на работы и оборудование. Замена картриджей и сервис — отдельно по желанию.`,
-  () =>
+  (_cityName: string, _P?: string) =>
     `Состав воды и условия на объекте у всех разные. Без выезда и при необходимости анализа нельзя назвать точную цену. Мы даём ориентиры по типам систем (умягчение, комплексная очистка от железа и марганца, обратный осмос на весь дом) и делаем точный расчёт после осмотра.`,
-  () =>
+  (_cityName: string, _P?: string) =>
     `Выезд в пределах зоны обслуживания (Ростов-на-Дону и города области) не тарифицируется отдельно. Стоимость заложена в смету под ключ. Удалённые объекты оговариваются индивидуально.`,
 ];
 
@@ -746,8 +746,8 @@ export function getPricesFaq(cityName: string, citySlug: string, cityNamePreposi
   const P = cityNamePrepositional ?? cityName;
   return [
     { question: PRICES_FAQ_Q[0](cityName, P), answer: PRICES_FAQ_A[0](cityName, P) },
-    { question: PRICES_FAQ_Q[1](), answer: PRICES_FAQ_A[1]() },
-    { question: PRICES_FAQ_Q[2](), answer: PRICES_FAQ_A[2]() },
-    { question: PRICES_FAQ_Q[3](), answer: PRICES_FAQ_A[3]() },
+    { question: PRICES_FAQ_Q[1](cityName, P), answer: PRICES_FAQ_A[1](cityName, P) },
+    { question: PRICES_FAQ_Q[2](cityName, P), answer: PRICES_FAQ_A[2](cityName, P) },
+    { question: PRICES_FAQ_Q[3](cityName, P), answer: PRICES_FAQ_A[3](cityName, P) },
   ];
 }

@@ -6,7 +6,12 @@ import { useRouter } from "next/navigation";
 const MIN_SUBMIT_DELAY_MS = 2000;
 const COMMENT = "Рассчитать стоимость (блок Монтаж под ключ)";
 
-export function MountingCalcForm() {
+type MountingCalcFormProps = {
+  /** Произвольный комментарий для лида (город + услуга на страницах). */
+  comment?: string;
+};
+
+export function MountingCalcForm({ comment }: MountingCalcFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,10 +50,9 @@ export function MountingCalcForm() {
     }
 
     if (!mounted) return;
-    const mountTime =
-  (window as unknown as { __mountingFormMountTime?: number }).__mountingFormMountTime ?? Date.now();
-
-const elapsed = Date.now() - mountTime;
+    const mountTimeStore = window as unknown as { __mountingFormMountTime?: number };
+    const mountTime = mountTimeStore.__mountingFormMountTime ?? Date.now();
+    const elapsed = Date.now() - mountTime;
 
     if (elapsed < MIN_SUBMIT_DELAY_MS) {
       setError("Подождите пару секунд и отправьте форму снова.");
@@ -60,7 +64,12 @@ const elapsed = Date.now() - mountTime;
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, comment, contactVia }),
+        body: JSON.stringify({
+          name,
+          phone,
+          contactVia,
+          comment: comment ?? COMMENT,
+        }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
