@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Умягчение, обезжелезивание, аэрация, обратный осмос, УФ-обеззараживание, обслуживание. Ростов-на-Дону и Ростовская область.",
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://water-rostov.ru"}/services`,
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://rnd.дукатснаб.рф"}/services`,
   },
 };
 

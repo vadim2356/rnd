@@ -12,12 +12,12 @@ Next.js 14 (App Router), SSG — все страницы собираются п
 
 | Переменная | Описание | Пример |
 |------------|----------|--------|
-| `NEXT_PUBLIC_SITE_URL` | Публичный URL сайта (canonical, Open Graph, sitemap, robots) | `https://water-rostov.ru` |
-| `SITE_URL` | Для next-sitemap при сборке; можно не задавать — возьмётся из `NEXT_PUBLIC_SITE_URL` | `https://water-rostov.ru` |
+| `NEXT_PUBLIC_SITE_URL` | Публичный URL сайта (canonical, Open Graph, sitemap, robots) | `https://rnd.дукатснаб.рф` |
+| `SITE_URL` | Для next-sitemap при сборке; можно не задавать — возьмётся из `NEXT_PUBLIC_SITE_URL` | `https://rnd.дукатснаб.рф` |
 | `BITRIX24_WEBHOOK_URL` | Вебхук Bitrix24 для заявок (crm.lead.add); если не задан — используется URL по умолчанию из кода | `https://b24-xxx.bitrix24.ru/rest/.../crm.lead.add.json` |
 | `MAIL_PASSWORD` | Пароль приложения Яндекса для отправки заявок на почту DukatSnab26@yandex.ru (Yandex SMTP). Без него заявки уходят только в Bitrix24 | пароль приложения из id.yandex.ru |
 
-Без них подставится дефолт `https://water-rostov.ru`; вебхук Bitrix24 — из кода; без MAIL_PASSWORD письма на почту не отправляются.
+Без них подставится дефолт `https://rnd.дукатснаб.рф`; вебхук Bitrix24 — из кода; без MAIL_PASSWORD письма на почту не отправляются.
 
 ### Проверка сборки локально
 

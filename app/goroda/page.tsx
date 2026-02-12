@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Выезд и монтаж водоочистки: Ростов-на-Дону, Батайск, Аксай, Азов, Таганрог, Новочеркасск, Шахты и другие города области.",
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://water-rostov.ru"}/goroda`,
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://rnd.дукатснаб.рф"}/goroda`,
   },
 };
 

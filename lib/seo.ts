@@ -1,6 +1,6 @@
 import { business } from "@/data/business";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://water-rostov.ru";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://rnd.дукатснаб.рф";
 const SITE_NAME = "Установка систем очистки воды — Ростов-на-Дону";
 
 export type FAQItem = { question: string; answer: string };

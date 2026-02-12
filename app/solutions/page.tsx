@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Водоочистка для частного дома, квартиры, из скважины, для бизнеса и HoReCa. Ростов-на-Дону и Ростовская область.",
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://water-rostov.ru"}/solutions`,
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://rnd.дукатснаб.рф"}/solutions`,
   },
 };
 

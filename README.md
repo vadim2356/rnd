@@ -393,10 +393,10 @@
 
 | Переменная | Описание | Пример |
 |------------|----------|--------|
-| `NEXT_PUBLIC_SITE_URL` | Публичный URL сайта (используется в коде и sitemap Next.js) | `https://water-rostov.ru` |
-| `SITE_URL` | Используется в `next-sitemap.config.js` при postbuild; лучше задать тем же значением | `https://water-rostov.ru` |
+| `NEXT_PUBLIC_SITE_URL` | Публичный URL сайта (используется в коде и sitemap Next.js) | `https://rnd.дукатснаб.рф` |
+| `SITE_URL` | Используется в `next-sitemap.config.js` при postbuild; лучше задать тем же значением | `https://rnd.дукатснаб.рф` |
 
-Без переменных подставляется дефолт `https://water-rostov.ru` (см. `lib/seo.ts`, `app/robots.ts`, `next-sitemap.config.js`).
+Без переменных подставляется дефолт `https://rnd.дукатснаб.рф` (см. `lib/seo.ts`, `app/robots.ts`, `next-sitemap.config.js`).
 
 ### Vercel (рекомендуется для Next.js)
 
@@ -448,8 +448,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-ARG NEXT_PUBLIC_SITE_URL=https://water-rostov.ru
-ARG SITE_URL=https://water-rostov.ru
+ARG NEXT_PUBLIC_SITE_URL=https://rnd.дукатснаб.рф
+ARG SITE_URL=https://rnd.дукатснаб.рф
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ENV SITE_URL=$SITE_URL
 RUN npm run build

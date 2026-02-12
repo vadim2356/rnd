@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "Ориентировочные цены на монтаж водоочистки под ключ. Эконом, Оптимум, Премиум. Ростов-на-Дону и Ростовская область. Точный расчёт после выезда.",
   alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://water-rostov.ru"}/prices`,
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://rnd.дукатснаб.рф"}/prices`,
   },
 };
 
