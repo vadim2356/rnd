@@ -20,6 +20,7 @@ import { InstallationPhotos } from "@/components/InstallationPhotos";
 import { FAQ } from "@/components/FAQ";
 import { ContactForm } from "@/components/ContactForm";
 import { PricesBlock } from "@/components/PricesBlock";
+import { business } from "@/data/business";
 import { getPricesLeadMain, getPricesSystemTypes } from "@/lib/content-generator";
 
 export default function HomePage() {
@@ -27,6 +28,7 @@ export default function HomePage() {
   const priceItems = getPricesSystemTypes().slice(0, 3).map((s) => ({
     title: s.title,
     priceLabel: s.priceLabel,
+    image: s.image,
   }));
   const localBusiness = getLocalBusinessJsonLd();
   const service = getServiceJsonLd();
@@ -88,12 +90,12 @@ export default function HomePage() {
               <p className="text-slate-600 mb-6">
                 Оставьте заявку — перезвоним в удобное время, ответим на вопросы и согласуем выезд инженера.
               </p>
-              <p className="font-semibold text-slate-900">Ростов-на-Дону</p>
+              <p className="font-semibold text-slate-900">{business.addressText}</p>
               <a
-                href="tel:+78631234567"
+                href={`tel:${business.phoneRaw}`}
                 className="text-sky-600 text-lg font-medium hover:underline"
               >
-                +7 (863) 123-45-67
+                {business.phone}
               </a>
               <p className="text-slate-500 text-sm mt-2">Пн–Сб: 9:00–19:00</p>
             </div>

@@ -74,7 +74,7 @@ export default async function CityHubPage({
 
   const lead = getCityHubLead(city.name, citySlug, city.namePrepositional);
   const pricesLeadShort = getPricesLead(city.name, citySlug, city.namePrepositional).split(".").slice(0, 2).join(".").trim() + ".";
-  const priceItems = getPricesSystemTypes().slice(0, 3).map((s) => ({ title: s.title, priceLabel: s.priceLabel }));
+  const priceItems = getPricesSystemTypes().slice(0, 3).map((s) => ({ title: s.title, priceLabel: s.priceLabel, image: s.image }));
   const waterFeatures = getCityWaterFeatures(city.name, citySlug, city.namePrepositional);
   const howWeWork = getCityHowWeWork(city.name, citySlug, city.namePrepositional);
   const faq = getCityHubFaq(city.name, citySlug, city.namePrepositional);

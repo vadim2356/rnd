@@ -58,6 +58,7 @@ export default async function SolutionPage({
   const priceItems = getPricesSystemTypes().slice(0, 3).map((s) => ({
     title: s.title,
     priceLabel: s.priceLabel,
+    image: s.image,
   }));
 
   const breadcrumbs = [
@@ -221,7 +222,7 @@ export default async function SolutionPage({
               </p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl">
                 <div>
-                  <p className="font-semibold text-slate-900">Ростов-на-Дону</p>
+                  <p className="font-semibold text-slate-900">{business.addressText}</p>
                   <a href={`tel:${business.phoneRaw}`} className="text-sky-600 text-lg font-medium hover:underline">
                     {business.phone}
                   </a>

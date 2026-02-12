@@ -1,3 +1,5 @@
+import { business } from "@/data/business";
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://water-rostov.ru";
 const SITE_NAME = "Установка систем очистки воды — Ростов-на-Дону";
 
@@ -54,9 +56,10 @@ export function getLocalBusinessJsonLd() {
     description:
       "Установка и монтаж систем очистки воды под ключ в Ростове-на-Дону и Ростовской области. Подбор по анализу воды, гарантия, сервис.",
     url: SITE_URL,
-    telephone: "+7 (863) 123-45-67",
+    telephone: business.phone,
     address: {
       "@type": "PostalAddress",
+      streetAddress: "ул. Малиновского, 3Б",
       addressLocality: "Ростов-на-Дону",
       addressRegion: "Ростовская область",
       addressCountry: "RU",

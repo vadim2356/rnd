@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CITY_SLUGS, cities } from "@/data/cities";
 import { SERVICE_SLUGS, services } from "@/data/services";
 import { SOLUTION_SLUGS, solutions } from "@/data/solutions";
+import { BLOG_ARTICLES } from "@/data/blog";
 import { SITE_URL } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import type { Metadata } from "next";
@@ -48,7 +49,28 @@ export default function SitemapPage() {
                 <li><Link href="/solutions" className="text-sky-600 hover:underline font-medium">Решения по объектам</Link></li>
                 <li><Link href="/goroda" className="text-sky-600 hover:underline font-medium">Города</Link></li>
                 <li><Link href="/prices" className="text-sky-600 hover:underline font-medium">Цены</Link></li>
+                <li><Link href="/contacts" className="text-sky-600 hover:underline font-medium">Контакты</Link></li>
+                <li><Link href="/blog" className="text-sky-600 hover:underline font-medium">Блог</Link></li>
                 <li><Link href="/privacy" className="text-sky-600 hover:underline font-medium">Политика конфиденциальности</Link></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-10">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-5 border-b border-slate-100 bg-slate-50/50">
+              <h2 className="text-xl font-semibold text-slate-900">Блог</h2>
+            </div>
+            <div className="p-6">
+              <ul className="space-y-2 text-slate-700">
+                {BLOG_ARTICLES.map((article) => (
+                  <li key={article.slug}>
+                    <Link href={`/blog/${article.slug}`} className="text-sky-600 hover:underline font-medium">
+                      {article.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

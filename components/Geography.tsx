@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { CITY_SLUGS, cities } from "@/data/cities";
+import { LazyMapIframe } from "@/components/LazyMapIframe";
+
+const GEO_MAP_SRC = "https://yandex.ru/map-widget/v1/?ll=41.5%2C47.5&z=8&pt=39.7233%2C47.2313,pm2rdm";
 
 export function Geography() {
   return (
@@ -13,15 +16,10 @@ export function Geography() {
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-7xl mx-auto items-start">
           <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-slate-100 aspect-[4/3] min-h-[280px]">
-            <iframe
+            <LazyMapIframe
+              src={GEO_MAP_SRC}
               title="Карта Ростовской области — зона выезда"
-              src="https://yandex.ru/map-widget/v1/?ll=41.5%2C47.5&z=8&pt=39.7233%2C47.2313,pm2rdm"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              allowFullScreen
-              className="w-full h-full min-h-[280px]"
-              style={{ border: 0 }}
+              containerClassName="min-h-[280px]"
             />
           </div>
           <div>

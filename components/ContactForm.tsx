@@ -41,8 +41,22 @@ export function ContactForm({ comment }: ContactFormProps = {}) {
       setError("Укажите имя (минимум 2 символа).");
       return;
     }
-    if (!phone || phone.replace(/\D/g, "").length < 10) {
-      setError("Укажите корректный телефон.");
+    const phoneDigits = phone?.replace(/\D/g, "") || "";
+    if (phoneDigits.length < 10) {
+      setError("Укажите номер телефона.");
+      return;
+    }
+    // Российский номер: 10 цифр или 11 (начинается с 7 или 8)
+    let normalized: string | null = null;
+    if (phoneDigits.length === 10 && /^\d{10}$/.test(phoneDigits)) {
+      normalized = "7" + phoneDigits;
+    } else if (phoneDigits.length === 11 && phoneDigits.startsWith("7")) {
+      normalized = phoneDigits;
+    } else if (phoneDigits.length === 11 && phoneDigits.startsWith("8")) {
+      normalized = "7" + phoneDigits.slice(1);
+    }
+    if (!normalized) {
+      setError("Укажите корректный российский номер: +7 (XXX) XXX-XX-XX");
       return;
     }
     if (consent !== "on") {
@@ -66,7 +80,7 @@ const elapsed = Date.now() - mountTime;
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
-          phone,
+          phone: "+" + normalized,
           comment: comment?.trim() || undefined,
           contactVia: contactVia || undefined,
         }),
@@ -114,7 +128,7 @@ const elapsed = Date.now() - mountTime;
           name="name"
           required
           minLength={2}
-          className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+          className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none text-slate-900 placeholder:text-slate-400"
           placeholder="Как к вам обращаться"
         />
       </div>
@@ -128,22 +142,31 @@ const elapsed = Date.now() - mountTime;
           id="phone"
           name="phone"
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+          className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none text-slate-900 placeholder:text-slate-400"
           placeholder="+7 (___) ___-__-__"
         />
       </div>
 
       <div>
         <p className="block text-sm font-medium text-slate-700 mb-2">
-          Написать в
+          Написать в <span className="text-slate-500 font-normal">(необязательно)</span>
         </p>
         <div className="flex flex-wrap gap-4">
           <label className="inline-flex items-center gap-2 cursor-pointer">
             <input
               type="radio"
               name="contactVia"
-              value="telegram"
+              value=""
               defaultChecked
+              className="rounded-full border-slate-300 text-sky-600 focus:ring-sky-500"
+            />
+            <span className="text-slate-700">Не важно</span>
+          </label>
+          <label className="inline-flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="contactVia"
+              value="telegram"
               className="rounded-full border-slate-300 text-sky-600 focus:ring-sky-500"
             />
             <span className="text-slate-700">Telegram</span>

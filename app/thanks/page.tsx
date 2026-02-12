@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_URL } from "@/lib/seo";
+import { business } from "@/data/business";
 
 export const metadata: Metadata = {
   title: "Заявка отправлена",
@@ -23,7 +24,8 @@ export default function ThanksPage() {
           Спасибо за заявку
         </h1>
         <p className="text-slate-600 mb-8">
-          Мы получили ваши контакты и перезвоним в ближайшее время в рабочее время (Пн–Сб, 9:00–19:00). Если вопрос срочный — звоните по номеру +7 (863) 123-45-67.
+          Мы получили ваши контакты и перезвоним в ближайшее время в рабочее время (Пн–Сб, 9:00–19:00). Если вопрос срочный — звоните по номеру{" "}
+          <a href={`tel:${business.phoneRaw}`} className="text-sky-600 font-medium hover:underline">{business.phone}</a>.
         </p>
         <Link
           href="/"

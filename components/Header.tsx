@@ -11,6 +11,7 @@ const navItems = [
   { label: "Как работаем", href: "#how" },
   { label: "Калькулятор", href: "#quiz" },
   { label: "Фото с монтажей", href: "#installations" },
+  { label: "Блог", href: "/blog" },
   { label: "Контакты", href: "#contacts" },
 ];
 
@@ -24,15 +25,25 @@ export function Header() {
           {business.brandName}
         </Link>
         <nav className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-slate-600 hover:text-sky-600 text-sm transition"
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) =>
+            item.href.startsWith("/") ? (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-slate-600 hover:text-sky-600 text-sm transition"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-slate-600 hover:text-sky-600 text-sm transition"
+              >
+                {item.label}
+              </a>
+            )
+          )}
         </nav>
         <a
           href={`tel:${business.phoneRaw}`}
@@ -57,16 +68,27 @@ export function Header() {
       </div>
       {open && (
         <nav className="md:hidden border-t border-slate-200 bg-white py-4 px-4 flex flex-col gap-2">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="py-2 text-slate-600 hover:text-sky-600"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) =>
+            item.href.startsWith("/") ? (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="py-2 text-slate-600 hover:text-sky-600"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className="py-2 text-slate-600 hover:text-sky-600"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </a>
+            )
+          )}
           <a href={`tel:${business.phoneRaw}`} className="py-2 text-sky-600 font-medium">
             {business.phone}
           </a>

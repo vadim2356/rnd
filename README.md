@@ -147,13 +147,13 @@
 
 **1) Услуга: `/services/umyagchenie-vody`**
 - **title (из buildMeta):** «Умягчение воды в Ростове-на-Дону — под ключ» (48 символов).
-- **description:** «Снижение жёсткости, защита техники от накипи. Ростов-на-Дону и Ростовская область. Монтаж водоочистки под ключ. ВодаПодКлюч.» (обрезается до 157 в buildMeta).
+- **description:** «Снижение жёсткости, защита техники от накипи. Ростов-на-Дону и Ростовская область. Монтаж водоочистки под ключ. Дукат Снаб.» (обрезается до 157 в buildMeta).
 - **canonical:** `{SITE_URL}/services/umyagchenie-vody`
 - **openGraph:** title и description те же, url = canonical.
 
 **2) Город + услуга: `/bataysk/obezzhelezivanie-vody`**
 - **title:** «Обезжелезивание воды в Батайск — под ключ» (примечание: в коде подставляется `city.name`; для Батайска грамматически уместнее «в Батайске», но это не ломает SEO).
-- **description:** shortDescription + «Батайск и Ростовская область. Монтаж водоочистки под ключ. ВодаПодКлюч.»
+- **description:** shortDescription + «Батайск и Ростовская область. Монтаж водоочистки под ключ. Дукат Снаб.»
 - **canonical:** `{SITE_URL}/bataysk/obezzhelezivanie-vody`
 - **openGraph:** аналогично.
 
@@ -294,42 +294,92 @@
 
 ---
 
-## 11. Медиа: фото для городских страниц
+## 11. Как менять фото на сайте
 
-**Примеры работ (монтаж):** на страницах городов блок «Примеры работ» выводит карточки с фото. Чтобы подгрузить свои фото с монтажа:
+Все изображения на сайте задаются путями в коде. Чтобы заменить любое фото: положите файл в **`public/images/`** (или подпапку) и укажите путь в соответствующем файле. В коде пути указаны на **webp** (рекомендуется для скорости). Форматы: **jpg, png, webp, svg**.
 
-1. Положите изображения в папку **`public/images/cases/`**.
-2. Имена файлов: **`{slug-города}-1.jpg`**, **`{slug-города}-2.jpg`** и т.д.  
+**Конвертация в webp:** если у вас пока лежат PNG/JPG, конвертируйте их в webp (например [Squoosh](https://squoosh.app), ImageMagick `convert *.png -quality 85 *.webp` или онлайн-конвертер) и положите в те же папки с расширением `.webp`. Ожидаемые файлы: `public/images/1.webp` … `7.webp`, `public/images/prices/soft-1252.webp`, `complex-1252.webp`, `ro-300.webp`, `pod-moiky2.webp`.
+
+---
+
+### Главная страница и общие блоки
+
+Файл: **`lib/image-paths.ts`**, объект **`IMAGE_PATHS`**.
+
+| Где на сайте | Ключ | Куда положить файл | Пример пути в коде |
+|--------------|------|--------------------|---------------------|
+| Герой (главная, страница «Услуги») | `hero` | `public/images/` | `"/images/1.webp"` |
+| Блок «Проблемы с водой» | `problems` | `public/images/` | `"/images/placeholder.svg"` |
+| Блок «Монтаж под ключ» | `mounting` | `public/images/` | `"/images/2.webp"` |
+| Карточки «Решения по объектам»: дом | `objects.house` | `public/images/` | `"/images/3.webp"` |
+| Карточки «Решения по объектам»: квартира | `objects.apartment` | `public/images/` | `"/images/4.webp"` |
+| Карточки «Решения по объектам»: скважина | `objects.well` | `public/images/` | `"/images/5.webp"` |
+| Карточки «Решения по объектам»: бизнес | `objects.business` | `public/images/` | `"/images/6.webp"` |
+| Блок «Рассчитать стоимость» (квиз) | `quiz` | `public/images/` | `"/images/7.webp"` |
+| Блок «Контакты и заявка» на главной | `contacts` | `public/images/` | `"/images/contact.webp"` |
+| Герой на страницах городов (например /rostov-na-donu) | `cityHero` | `public/images/` | `"/images/city-hero.jpg"` |
+
+**Как поменять:** откройте `lib/image-paths.ts`, найдите нужный ключ и замените значение на путь к вашему файлу, например `"/images/contact.webp"`. Файл должен лежать в `public/images/` — в коде путь всегда от корня сайта: `/images/имя-файла.расширение`.
+
+---
+
+### Фото для каждой страницы услуги
+
+На страницах услуг (например `/services/umyagchenie-vody`, `/rostov-na-donu/obratnyj-osmos`) в герое можно показать своё фото для каждого типа услуги.
+
+Файл: **`lib/image-paths.ts`**, объект **`SERVICE_HERO_IMAGES`**. Ключ — slug услуги из `data/services.ts`.
+
+| Slug услуги | Пример пути |
+|-------------|-------------|
+| `umyagchenie-vody` | `"/images/services/umyagchenie.jpg"` |
+| `obezzhelezivanie-vody` | `"/images/services/obezzhelezivanie.jpg"` |
+| `aeraciya-vody` | `"/images/services/aeraciya.jpg"` |
+| `obratnyj-osmos` | `"/images/services/osmos.jpg"` |
+| `uf-obezzarazhivanie` | `"/images/services/uf.jpg"` |
+| `obsluzhivanie` | `"/images/services/obsluzhivanie.jpg"` |
+| `ustanovka-sistem-ochistki-vody` | `"/images/services/ustanovka.jpg"` |
+
+Если для услуги ключ не задан — подставится `IMAGE_PATHS.hero`. Файлы кладите в `public/images/services/` (или укажите свой путь).
+
+---
+
+### Карточки цен (главная, страницы /prices и /[город]/prices)
+
+Три системы: умягчение, комплексная очистка, обратный осмос. Пути задаются в **`lib/content-generator.ts`** в массиве **`PRICES_SYSTEM_TYPES`** (поле `image` у каждого объекта).
+
+| Система | Имя файла в `public/images/prices/` |
+|---------|-------------------------------------|
+| Система умягчения воды | `soft-1252.jpg` |
+| Комплексная система очистки воды | `complex-1252.jpg` |
+| Система обратного осмоса на весь дом | `ro-300.jpg` |
+
+Чтобы использовать свои имена файлов — измените поле `image` в `PRICES_SYSTEM_TYPES` (например `"/images/prices/мое-фото.jpg"`) и положите файл в `public/images/prices/`.
+
+---
+
+### Фото с монтажей (галерея на главной и на страницах услуг)
+
+Файл: **`lib/installation-photos.ts`**, массив **`INSTALLATION_PHOTOS`**.
+
+1. Положите фото в **`public/images/installations/`** (например `1.jpg`, `2.jpg`).
+2. В `lib/installation-photos.ts` добавьте в массив пути: `"/images/installations/1.jpg"`, `"/images/installations/2.jpg"` и т.д.
+
+Порядок в массиве задаёт порядок показа в галерее.
+
+---
+
+### Примеры работ на страницах городов
+
+Блок «Примеры работ» на страницах городов (например `/rostov-na-donu`) подтягивает фото по имени файла.
+
+1. Положите изображения в **`public/images/cases/`**.
+2. Имена: **`{slug-города}-1.jpg`**, **`{slug-города}-2.jpg`** и т.д.  
    Примеры: `rostov-na-donu-1.jpg`, `bataysk-1.jpg`, `aksay-2.jpg`.
-3. Если файла нет — подставится плейсхолдер. Порядок карточек задаётся генератором контента (3–4 кейса на город).
+3. Если файла нет — подставится плейсхолдер. Сколько карточек показывать и в каком порядке — задаётся генератором контента (3–4 кейса на город).
 
-**Как добавить фото вместо заглушек (главная, услуги, города):** все пути к картинкам собраны в одном файле **`lib/image-paths.ts`**. Чтобы подставить свои фото:
+---
 
-1. Положите изображения в **`public/images/`** (форматы: jpg, png, webp, svg).
-2. Откройте **`lib/image-paths.ts`** и замените нужные пути на ваши файлы.
-
-| Куда ставится фото | Ключ в `IMAGE_PATHS` | Пример значения |
-|--------------------|----------------------|-----------------|
-| Герой (главная и страница «Услуги») | `hero` | `"/images/hero.jpg"` |
-| Блок «Проблемы с водой» | `problems` | `"/images/problems.jpg"` |
-| Блок «Монтаж под ключ» | `mounting` | `"/images/mounting.jpg"` |
-| Карточки «Решения по объектам» (дом, квартира, скважина, бизнес) | `objects.house`, `objects.apartment`, `objects.well`, `objects.business` | `"/images/objects-house.jpg"` и т.п. |
-| Блок «Рассчитать стоимость» (квиз) | `quiz` | `"/images/quiz.jpg"` |
-| Блок контактов на главной | `contacts` | `"/images/contacts.jpg"` |
-| Герой на страницах городов | `cityHero` | `"/images/city-hero.jpg"` |
-
-После замены путей в `lib/image-paths.ts` заглушки на сайте автоматически заменятся на ваши фото. Файл `placeholder.svg` можно оставить как резерв или удалить, если везде указаны свои пути.
-
-**Главное фото для каждой услуги:** на страницах услуг (например `/services/umyagchenie-vody`, `/rostov-na-donu/obratnyj-osmos`) герой-блок как на главной, но с **своим фото для каждого типа услуги**. Задайте пути в **`lib/image-paths.ts`** в объекте `SERVICE_HERO_IMAGES` (ключ — slug услуги: `umyagchenie-vody`, `obezzhelezivanie-vody`, `aeraciya-vody`, `obratnyj-osmos`, `uf-obezzarazhivanie`, `obsluzhivanie`, `ustanovka-sistem-ochistki-vody`). Если для услуги не указано — подставится `IMAGE_PATHS.hero`. Пример: `"umyagchenie-vody": "/images/services/umyagchenie.jpg"`.
-
-**Фото с монтажей:** блок «Фото с монтажей» (вместо отзывов) показывается на главной и на страницах услуг. Чтобы добавить свои фото:
-
-1. Положите изображения в **`public/images/installations/`** (например `1.jpg`, `2.jpg`, `3.jpg`).
-2. Откройте **`lib/installation-photos.ts`** и добавьте пути в массив `INSTALLATION_PHOTOS`, например: `"/images/installations/1.jpg"`, `"/images/installations/2.jpg"`.
-
-Фото появятся в галерее на главной (секция «Фото с монтажей») и на каждой странице услуги.
-
-**Фото в карточках цен:** для карточки «Промышленная система обратного осмоса RO-300» на страницах `/prices` и `/[город]/prices` можно добавить фото. Положите изображение в **`public/images/prices/ro-300.jpg`** — оно отобразится в верхней части карточки. Для других типов систем поле `image` можно задать в `lib/content-generator.ts` (PRICES_SYSTEM_TYPES) и добавить файл в `public/images/prices/`.
+**Кратко:** чтобы поменять любое фото — положите файл в `public/images/` (или подпапку) и укажите путь в нужном месте: `lib/image-paths.ts`, `lib/content-generator.ts` или `lib/installation-photos.ts`. В проекте пути указаны на формат **webp** (меньше вес, быстрее загрузка); при замене картинок конвертируйте их в webp и положите с расширением `.webp`, либо измените пути в коде на свои расширения.
 
 ---
 

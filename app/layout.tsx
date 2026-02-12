@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { BlogPreview } from "@/components/BlogPreview";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
+import { YandexMetrika } from "@/components/YandexMetrika";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-sans" });
@@ -45,6 +47,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    yandex: "1ca179502c1c665e",
+  },
 };
 
 export default function RootLayout({
@@ -54,12 +59,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={inter.variable}>
+      <head>
+        <link rel="preconnect" href="https://mc.yandex.ru" />
+        <link rel="dns-prefetch" href="https://maps.yastatic.net" />
+        <link rel="dns-prefetch" href="https://yandex.ru" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      </head>
       <body className="min-h-screen flex flex-col font-sans antialiased">
         <Header />
         <main className="flex-1">{children}</main>
+        <BlogPreview />
         <Footer />
         <FloatingCTA />
         <ExitIntentPopup />
+        <YandexMetrika />
+        <noscript>
+          <div>
+            {/* Пиксель Метрики при отключённом JS — next/image не подходит для внешнего трекинга */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://mc.yandex.ru/watch/106797821"
+              style={{ position: "absolute", left: "-9999px" }}
+              alt=""
+            />
+          </div>
+        </noscript>
       </body>
     </html>
   );

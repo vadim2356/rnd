@@ -98,15 +98,15 @@ export default function PricesPage() {
                   >
                     {sys.image ? (
                       <>
-                        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,320px)_1fr] lg:grid-cols-[minmax(0,380px)_1fr] gap-4 sm:gap-6 items-start">
-                          <div>
-                            <div className="relative aspect-video w-full rounded-lg sm:rounded-xl overflow-hidden bg-slate-100 min-h-[200px] sm:min-h-0">
+                        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,280px)_1fr] lg:grid-cols-[minmax(0,340px)_1fr] gap-4 sm:gap-6 items-start">
+                          <div className="w-full">
+                            <div className="relative aspect-[3/4] w-full max-w-[340px] rounded-lg sm:rounded-xl overflow-hidden bg-slate-100">
                               <Image
                                 src={sys.image}
                                 alt={sys.title}
                                 fill
-                                className="object-cover"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 320px, 380px"
+                                className="object-contain"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 280px, 340px"
                               />
                             </div>
                             <p className="text-lg sm:text-xl font-bold text-sky-600 mt-3 sm:mt-4">{sys.priceLabel}</p>

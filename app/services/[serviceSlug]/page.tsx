@@ -93,6 +93,7 @@ export default async function ServicePage({
   const priceItems = getPricesSystemTypes().slice(0, 3).map((s) => ({
     title: s.title,
     priceLabel: s.priceLabel,
+    image: s.image,
   }));
 
   const breadcrumbs = [

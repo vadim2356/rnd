@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { ContactForm } from "@/components/ContactForm";
 
 export type PricePreviewItem = {
   title: string;
   priceLabel: string;
+  /** Путь к фото карточки (например /images/prices/soft-1252.webp) */
+  image?: string;
 };
 
 type PricesBlockProps = {
@@ -48,25 +51,36 @@ export function PricesBlock({ lead, pricesHref, linkLabel, items }: PricesBlockP
                   : "border-slate-200 bg-slate-50/50 hover:border-slate-300"
               }`}
             >
-              {/* Заглушка под фото */}
               <div
-                className="relative w-full aspect-[4/3] bg-slate-200 flex items-center justify-center"
+                className="relative w-full aspect-[3/4] bg-slate-100 overflow-hidden"
                 aria-hidden
               >
-                <svg
-                  className="w-12 h-12 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6a2 2 0 11-4 0 2 2 0 014 0zM16 18h3m-3 4h3"
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt=""
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                </svg>
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <svg
+                      className="w-12 h-12 text-slate-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6a2 2 0 11-4 0 2 2 0 014 0zM16 18h3m-3 4h3"
+                      />
+                    </svg>
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <p className="font-semibold text-slate-900 text-sm leading-snug line-clamp-2 mb-2">

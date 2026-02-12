@@ -60,6 +60,11 @@ export function Footer() {
             </p>
             <ul className="text-sm space-y-1 mt-2">
               <li>
+                <Link href="/contacts" className="hover:text-white transition">
+                  Контакты
+                </Link>
+              </li>
+              <li>
                 <Link href="/goroda" className="hover:text-white transition">
                   Города
                 </Link>
@@ -67,6 +72,11 @@ export function Footer() {
               <li>
                 <Link href="/prices" className="hover:text-white transition">
                   Цены
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="hover:text-white transition">
+                  Блог
                 </Link>
               </li>
               <li>
