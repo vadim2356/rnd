@@ -51,7 +51,8 @@ export function ContactForm({ comment }: ContactFormProps = {}) {
     }
 
     if (!mounted) return;
-    const elapsed = Date.now() - (window as unknown as { __formMountTime?: number }).__formMountTime;
+    const mountTime = (window as unknown as { __formMountTime?: number }).__formMountTime ?? Date.now();
+const elapsed = Date.now() - mountTime;
     if (elapsed < MIN_SUBMIT_DELAY_MS) {
       setError("Подождите пару секунд и отправьте форму снова.");
       return;
