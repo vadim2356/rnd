@@ -333,4 +333,101 @@
 
 ---
 
+## 12. Деплой на хостинг
+
+Проект — статический Next.js (SSG): все страницы собираются при `next build`, postbuild генерирует sitemap через next-sitemap. Подойдёт любой хостинг с Node.js 18+ или платформы для статики/Next.js.
+
+### Переменные окружения
+
+Перед деплоем задайте **базовый URL сайта** (для canonical, Open Graph, sitemap, robots):
+
+| Переменная | Описание | Пример |
+|------------|----------|--------|
+| `NEXT_PUBLIC_SITE_URL` | Публичный URL сайта (используется в коде и sitemap Next.js) | `https://water-rostov.ru` |
+| `SITE_URL` | Используется в `next-sitemap.config.js` при postbuild; лучше задать тем же значением | `https://water-rostov.ru` |
+
+Без переменных подставляется дефолт `https://water-rostov.ru` (см. `lib/seo.ts`, `app/robots.ts`, `next-sitemap.config.js`).
+
+### Vercel (рекомендуется для Next.js)
+
+1. Подключите репозиторий на [vercel.com](https://vercel.com) (GitHub/GitLab/Bitbucket).
+2. Vercel сам определит Next.js; **Build Command:** `npm run build` (postbuild выполнится автоматически).
+3. В настройках проекта → **Environment Variables** добавьте:
+   - `NEXT_PUBLIC_SITE_URL` = `https://ваш-домен.ru`
+   - при необходимости `SITE_URL` = то же значение (для next-sitemap).
+4. Деплой: каждый push в основную ветку создаёт превью; для продакшена привяжите свой домен в настройках.
+
+### Netlify
+
+1. **New site from Git** → выберите репозиторий.
+2. **Build command:** `npm run build`  
+   **Publish directory:** `.next` — не подходит для Next.js standalone. Лучше использовать:
+   - **Build command:** `npm run build`  
+   **Publish directory:** оставьте пустым и укажите **Plugin** или настройте **Next.js runtime** (Netlify поддерживает Next.js через адаптер или отдельные инструкции для Next на их документации).
+3. В **Site settings → Environment variables** добавьте `NEXT_PUBLIC_SITE_URL` и при необходимости `SITE_URL`.
+4. Домен задаётся в **Domain management**.
+
+Для Netlify актуальна [официальная инструкция по Next.js](https://docs.netlify.com/frameworks/next-js/); при использовании статического экспорта или их Next runtime пути могут отличаться.
+
+### Свой сервер (VPS, VDS) или shared-хостинг с Node.js
+
+1. На сервере: Node.js 18+ (рекомендуется LTS).
+2. Клонируйте репозиторий, установите зависимости и соберите проект:
+   ```bash
+   npm ci
+   npm run build
+   ```
+3. Запуск (продакшен):
+   ```bash
+   npm run start
+   ```
+   По умолчанию приложение слушает порт 3000. Используйте процесс-менедер (PM2, systemd) и обратный прокси (Nginx/Apache) с SSL.
+4. Переменные окружения задайте в системе или в `.env.production`:
+   ```bash
+   NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru
+   SITE_URL=https://ваш-домен.ru
+   ```
+
+### Docker (опционально)
+
+Пример минимального образа для запуска после сборки:
+
+```dockerfile
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+ARG NEXT_PUBLIC_SITE_URL=https://water-rostov.ru
+ARG SITE_URL=https://water-rostov.ru
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+ENV SITE_URL=$SITE_URL
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+RUN npm ci --omit=dev
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+Сборка и запуск:
+
+```bash
+docker build -t land-next .
+docker run -p 3000:3000 -e NEXT_PUBLIC_SITE_URL=https://ваш-домен.ru -e SITE_URL=https://ваш-домен.ru land-next
+```
+
+### Краткий чеклист перед выкладкой
+
+- [ ] Заданы `NEXT_PUBLIC_SITE_URL` и при необходимости `SITE_URL` для продакшен-домена.
+- [ ] После деплоя проверены главная, несколько страниц услуг/городов, `/sitemap.xml`, `/robots.txt`.
+- [ ] Canonical и Open Graph ведут на итоговый домен (без лишнего префикса или порта).
+
+---
+
 *Конец отчёта. Все выводы сделаны на основе анализа кода в репозитории.*
