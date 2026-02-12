@@ -64,7 +64,11 @@ export function ExitIntentPopup() {
     }
 
     if (!mounted) return;
-    const elapsed = Date.now() - (window as unknown as { __exitFormMountTime?: number }).__exitFormMountTime;
+    const mountTime =
+  (window as unknown as { __exitFormMountTime?: number }).__exitFormMountTime ?? Date.now();
+
+const elapsed = Date.now() - mountTime;
+
     if (elapsed < MIN_SUBMIT_DELAY_MS) {
       setError("Подождите пару секунд и отправьте форму снова.");
       return;
