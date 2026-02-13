@@ -8,7 +8,7 @@ export function YandexMetrika() {
   return (
     <Script
       src="https://mc.yandex.ru/metrika/tag.js"
-      strategy="lazyOnload"
+      strategy="afterInteractive"
       onLoad={() => {
         const w = typeof window !== "undefined" ? window : undefined;
         const ym = w && (w as unknown as { ym?: (id: number, action: string, opts?: object) => void }).ym;
@@ -19,6 +19,8 @@ export function YandexMetrika() {
             accurateTrackBounce: true,
             webvisor: true,
             ecommerce: "dataLayer",
+            referrer: document.referrer,
+            url: location.href,
           });
         }
       }}

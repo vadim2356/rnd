@@ -66,16 +66,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
       <body className="min-h-screen flex flex-col font-sans antialiased">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <BlogPreview />
-        <Footer />
-        <FloatingCTA />
-        <ExitIntentPopup />
         <YandexMetrika />
         <noscript>
           <div>
-            {/* Пиксель Метрики при отключённом JS — next/image не подходит для внешнего трекинга */}
+            {/* Пиксель Метрики при отключённом JS */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://mc.yandex.ru/watch/106797821"
@@ -84,6 +78,12 @@ export default function RootLayout({
             />
           </div>
         </noscript>
+        <Header />
+        <main className="flex-1">{children}</main>
+        <BlogPreview />
+        <Footer />
+        <FloatingCTA />
+        <ExitIntentPopup />
       </body>
     </html>
   );
