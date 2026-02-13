@@ -8,7 +8,7 @@ export function YandexMetrika() {
   return (
     <Script
       src="https://mc.yandex.ru/metrika/tag.js"
-      strategy="afterInteractive"
+      strategy="beforeInteractive"
       onLoad={() => {
         const w = typeof window !== "undefined" ? window : undefined;
         const ym = w && (w as unknown as { ym?: (id: number, action: string, opts?: object) => void }).ym;

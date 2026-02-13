@@ -6,8 +6,9 @@ import { Footer } from "@/components/Footer";
 import { BlogPreview } from "@/components/BlogPreview";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
-import { YandexMetrika } from "@/components/YandexMetrika";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
+
+const YANDEX_METRIKA_SCRIPT = `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments);};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t);a=e.getElementsByTagName(t)[0];k.async=1;k.src=r;a.parentNode.insertBefore(k,a);})(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=106797821","ym");ym(106797821,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href});`;
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-sans" });
 
@@ -64,9 +65,12 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://maps.yastatic.net" />
         <link rel="dns-prefetch" href="https://yandex.ru" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{ __html: YANDEX_METRIKA_SCRIPT }}
+        />
       </head>
       <body className="min-h-screen flex flex-col font-sans antialiased">
-        <YandexMetrika />
         <noscript>
           <div>
             {/* Пиксель Метрики при отключённом JS */}
