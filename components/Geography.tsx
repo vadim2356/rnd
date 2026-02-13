@@ -28,9 +28,6 @@ export function Geography() {
               Все районы города. Выезд в пригород (посёлки, СНТ) уточняется при заявке.
             </p>
             <p className="font-semibold text-slate-900 mb-3">Города области</p>
-            <p className="text-slate-500 text-xs mb-3">
-              Все города из конфига — ссылки ведут на посадочные страницы.
-            </p>
             <ul className="flex flex-wrap gap-2 mb-6">
               {CITY_SLUGS.map((slug) => (
                 <li key={slug}>
